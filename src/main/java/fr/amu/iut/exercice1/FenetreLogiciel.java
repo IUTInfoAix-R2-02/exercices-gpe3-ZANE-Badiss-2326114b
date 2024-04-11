@@ -34,6 +34,7 @@ public class FenetreLogiciel extends Application {
 
         vbox.setAlignment( Pos.CENTER );
         vbox.getChildren().forEach(child -> VBox.setMargin(child, new Insets(5.0d)));
+        //vbox.getSpacing(10);     pareil
 
         Separator sep = new Separator(Orientation.VERTICAL);
         hbox.getChildren().addAll( vbox, sep);
