@@ -35,7 +35,6 @@ public class IHMPendu extends Application {
         root = new BorderPane();
 
 
-        for(int i=0;i < lb.();)
 
         root.setCenter(lb);
         root.setBottom(tf);
