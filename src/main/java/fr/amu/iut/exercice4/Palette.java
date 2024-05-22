@@ -5,7 +5,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -77,6 +76,9 @@ public class Palette extends Application {
         bas.getChildren().addAll( vert, rouge, bleu );
         bas.setAlignment( Pos.BOTTOM_CENTER);
 
+
+
+
         vert.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> handleButonClick(actionEvent) );
         rouge.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> handleBtonClick(actionEvent) );
         bleu.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> handleBonClick(actionEvent) );
@@ -92,7 +94,5 @@ public class Palette extends Application {
         primaryStage.setHeight(200);
 
     };
-
-
 }
 
