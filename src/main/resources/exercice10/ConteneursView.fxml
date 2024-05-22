@@ -1,2 +1,5 @@
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane></BorderPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="fr.amu.iut.exercice10.Conteneurs">
+
+
+</BorderPane>

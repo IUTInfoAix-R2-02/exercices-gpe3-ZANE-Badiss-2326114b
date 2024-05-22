@@ -27,7 +27,7 @@ public class LoginControl extends GridPane {
        for(int i=0; i<pwd.getLength(); i+=1 ){
            chaine += "*";
        }
-       System.out;
+       System.out.print(chaine);
     }
 
     public void cancelClicked() {
