@@ -15,13 +15,7 @@ public class LoginControl extends GridPane {
     TextField userid = new TextField();
 
     @FXML
-    Button ok = new Button();
-
-    @FXML
-    Button cancel = new Button();
-
-
-    public void okClicked() {
+    private void okClicked() {
         System.out.println(userid.getText());
         String chaine = new String("");
        for(int i=0; i<pwd.getLength(); i+=1 ){
@@ -30,7 +24,8 @@ public class LoginControl extends GridPane {
        System.out.print(chaine);
     }
 
-    public void cancelClicked() {
+    @FXML
+    private void cancelClicked() {
         userid.clear();
         pwd.clear();
     }
