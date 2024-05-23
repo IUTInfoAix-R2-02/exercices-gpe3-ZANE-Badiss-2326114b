@@ -45,6 +45,7 @@ public class Palette extends Application {
 
         panneau = new Pane();
         panneau.setPrefSize(400,200);
+        boutons.getOnMouseClicked().
 
         boutons = new HBox(10);
         boutons.setAlignment(Pos.CENTER);
@@ -60,8 +61,10 @@ public class Palette extends Application {
 
         gestionnaireEvenement = (event) -> {
             sourceOfEvent = (CustomButton) event.getSource();
+            sourceOfEvent.setNbClics(sourceOfEvent.getNbClics() + 1);
         };
 
+        vert.nbClicsProperty().addListener();
         vert.setOnAction(gestionnaireEvenement);
         rouge.setOnAction(gestionnaireEvenement);
         bleu.setOnAction(gestionnaireEvenement);
