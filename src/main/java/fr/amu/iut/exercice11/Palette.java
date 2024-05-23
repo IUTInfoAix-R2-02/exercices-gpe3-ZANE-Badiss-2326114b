@@ -1,20 +1,15 @@
 package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -22,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import static javafx.beans.binding.Bindings.when;
 
 @SuppressWarnings("Duplicates")
 public class Palette extends Application {
@@ -42,10 +39,30 @@ public class Palette extends Application {
 
     private Label texteDuBas;
 
+    private IntegerProperty nbFois;
+
+    private StringProperty message;
+
+    private StringProperty couleurPanneau;
+
+    private StringProperty clr;
+
+    public String getClr() {
+        return clr.get();
+    }
+
+    public StringProperty clrProperty() {
+        return clr;
+    }
+
+    public void setClr(String clr) {
+        this.clr.set(clr);
+    }
 
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
+
         texteDuHaut = new Label();
         texteDuHaut.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(texteDuHaut, Pos.CENTER);
@@ -57,23 +74,54 @@ public class Palette extends Application {
         boutons = new HBox(10);
         boutons.setAlignment(Pos.CENTER);
         boutons.setPadding(new Insets(10, 5, 10, 5));
-        texteDuBas = new Label("Le" +" est une jolie couleur !");
+        texteDuBas = new Label();
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
+        couleurPanneau = new SimpleStringProperty("#000000");
 
+        nbFois= new SimpleIntegerProperty();
+
+        message = new SimpleStringProperty();
+        clr = new SimpleStringProperty("#000000");
         vert = new Button("Vert");
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
+        createBindings();
+        rouge.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setMessage(rouge.getText());
+                nbRouge++;
+                setNbFois(nbRouge);
+                setCouleurPanneau("-fx-background-color: red;");
+                setClr("-fx-text-fill: red;");
+            }
+        });
+        bleu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setMessage(bleu.getText());
+                nbBleu++;
+                setNbFois(nbBleu);
+                setCouleurPanneau("-fx-background-color: blue;");
+                setClr("-fx-text-fill: blue;");
+            }
+        });
+        vert.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setMessage(vert.getText());
+                nbVert++;
+                setNbFois(nbVert);
+                setCouleurPanneau("-fx-background-color: green;");
+                setClr("-fx-text-fill: green;");
+
+            }
+
+        });
 
 
         boutons.getChildren().addAll(vert, rouge, bleu);
-
-        vert.setOnAction(event ->  texteDuBas.setStyle("-fx-text-fill:rgba(0,255, 0, 0.5)"));
-        vert.setOnAction(event ->  texteDuBas.setStyle("-fx-text-fill:rgba(0,255, 0, 0.5)"));
-        rouge.setOnAction(event ->  texteDuBas.setStyle("-fx-text-fill:rgba(255,0, 0, 0.5)"));
-        bleu.setOnAction(event ->  texteDuBas.setStyle("-fx-text-fill:rgba(0,0, 255, 0.5)"));
-
-
 
         root.setCenter(panneau);
         root.setTop(texteDuHaut);
@@ -83,122 +131,51 @@ public class Palette extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
 
+    private void createBindings(){
+        BooleanProperty pasEncoreDeClic= new SimpleBooleanProperty(true);
+        pasEncoreDeClic.bind(Bindings.equal(nbFois,0));
+        texteDuHaut.textProperty().bind(when(pasEncoreDeClic).then("Cliquez sur un bouton").otherwise(Bindings.concat(message," choisi ",nbFois," fois")));
+        panneau.styleProperty().bind(couleurPanneau);
+        texteDuBas.textProperty().bind(when(pasEncoreDeClic).then("Pas de couleur :/").otherwise(Bindings.concat("Le ",message," est une belle couleur !")));
+        texteDuBas.styleProperty().bind(clr);
+        //  texteDuBas.textFillProperty().bind(Bindings.createObjectBinding(() -> Paint.valueOf(couleurPanneau.get()),couleurPanneau));
+    }
 
-        IntegerProperty nbFois = new IntegerProperty() {
-            @Override
-            public void bind(ObservableValue<? extends Number> observableValue) {
+    public int getNbFois() {
+        return nbFois.get();
+    }
 
-            }
+    public IntegerProperty nbFoisProperty() {
+        return nbFois;
+    }
 
-            @Override
-            public void unbind() {
+    public void setNbFois(int nbFois) {
+        this.nbFois.set(nbFois);
+    }
 
-            }
+    public String getMessage() {
+        return message.get();
+    }
 
-            @Override
-            public boolean isBound() {
-                return false;
-            }
+    public StringProperty messageProperty() {
+        return message;
+    }
 
-            @Override
-            public Object getBean() {
-                return null;
-            }
+    public String getCouleurPanneau() {
+        return couleurPanneau.get();
+    }
 
-            @Override
-            public String getName() {
-                return null;
-            }
+    public StringProperty couleurPanneauProperty() {
+        return couleurPanneau;
+    }
 
-            @Override
-            public int get() {
-                return 0;
-            }
+    public void setCouleurPanneau(String couleurPanneau) {
+        this.couleurPanneau.set(couleurPanneau);
+    }
 
-            @Override
-            public void addListener(ChangeListener<? super Number> changeListener) {
-
-            }
-
-            @Override
-            public void removeListener(ChangeListener<? super Number> changeListener) {
-
-            }
-
-            @Override
-            public void addListener(InvalidationListener invalidationListener) {
-
-            }
-
-            @Override
-            public void removeListener(InvalidationListener invalidationListener) {
-
-            }
-
-            @Override
-            public void set(int i) {
-
-            }
-
-
-        StringProperty message = new StringProperty() {
-            @Override
-            public void bind(ObservableValue<? extends String> observableValue) {
-
-            }
-
-            @Override
-            public void unbind() {
-
-            }
-
-            @Override
-            public boolean isBound() {
-                return false;
-            }
-
-            @Override
-            public Object getBean() {
-                return null;
-            }
-
-            @Override
-            public String getName() {
-                return null;
-            }
-
-            @Override
-            public String get() {
-                return null;
-            }
-
-            @Override
-            public void addListener(ChangeListener<? super String> changeListener) {
-
-            }
-
-            @Override
-            public void removeListener(ChangeListener<? super String> changeListener) {
-
-            }
-
-            @Override
-            public void addListener(InvalidationListener invalidationListener) {
-
-            }
-
-            @Override
-            public void removeListener(InvalidationListener invalidationListener) {
-
-            }
-
-            @Override
-            public void set(String s) {
-
-            }
-
-
-
-
-
+    public void setMessage(String message) {
+        this.message.set(message);
+    }
+}
