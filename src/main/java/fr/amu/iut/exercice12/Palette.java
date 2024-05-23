@@ -1,6 +1,8 @@
 package fr.amu.iut.exercice12;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -45,7 +48,6 @@ public class Palette extends Application {
 
         panneau = new Pane();
         panneau.setPrefSize(400,200);
-        boutons.getOnMouseClicked().
 
         boutons = new HBox(10);
         boutons.setAlignment(Pos.CENTER);
@@ -64,7 +66,54 @@ public class Palette extends Application {
             sourceOfEvent.setNbClics(sourceOfEvent.getNbClics() + 1);
         };
 
-        vert.nbClicsProperty().addListener();
+
+        vert.nbClicsProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> source, Number
+                            ancienneValeur, Number nouvelleValeur) {
+                        texteDuHaut.setText(vert.getText()+ " Nombre de clics "+ nouvelleValeur);
+                        texteDuBas.setText("Le Vert est une jolie couleur");
+                        texteDuBas.setTextFill(Paint.valueOf(sourceOfEvent.getCouleur()));
+                        panneau.setStyle("-fx-background-color: green");
+
+                    }
+
+                }
+        );
+
+        rouge.nbClicsProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> source, Number
+                            ancienneValeur, Number nouvelleValeur) {
+                        texteDuHaut.setText(rouge.getText()+ " Nombre de clics "+ nouvelleValeur);
+                        texteDuBas.setText("Le Rouge est une jolie couleur");
+                        texteDuBas.setTextFill(Paint.valueOf(sourceOfEvent.getCouleur()));
+                        panneau.setStyle("-fx-background-color: red");
+
+                    }
+
+                }
+        );
+
+        bleu.nbClicsProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> source, Number
+                            ancienneValeur, Number nouvelleValeur) {
+                        texteDuHaut.setText(bleu.getText()+ " Nombre de clics "+ nouvelleValeur);
+                        texteDuBas.setText("Le Vert est une jolie couleur");
+                        texteDuBas.setTextFill(Paint.valueOf(sourceOfEvent.getCouleur()));
+                        panneau.setStyle("-fx-background-color: blue");
+
+                    }
+
+                }
+        );
+
+
+
         vert.setOnAction(gestionnaireEvenement);
         rouge.setOnAction(gestionnaireEvenement);
         bleu.setOnAction(gestionnaireEvenement);
@@ -73,7 +122,7 @@ public class Palette extends Application {
 
         root.setCenter(panneau);
         root.setTop(texteDuHaut);
-        root.setBottom(boutons);
+        root.setBottom(bas);
 
         Scene scene = new Scene(root);
 
