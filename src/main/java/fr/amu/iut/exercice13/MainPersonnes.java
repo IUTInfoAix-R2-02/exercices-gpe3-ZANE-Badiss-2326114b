@@ -31,7 +31,7 @@ public class MainPersonnes  {
                             System.out.println(removedPerson.getNom());
                         }
                     }
-                        if (change.wasUpdated()) {
+                    else if (change.wasUpdated()) {
                             int index = change.getFrom();
                             Personne p = change.getList().get(index);
                                 System.out.println(p.getNom()+" a maintenant "+ p.getAge() +"ans");
