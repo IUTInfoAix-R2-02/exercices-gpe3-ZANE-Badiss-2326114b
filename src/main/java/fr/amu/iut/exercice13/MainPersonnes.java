@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-import static fr.amu.iut.exercice4.MainPersonnes.question1;
+import static fr.amu.iut.exercice14.MainPersonnes.question1;
 
 @SuppressWarnings("Duplicates")
 public class MainPersonnes  {
