@@ -22,7 +22,8 @@ public class MainPersonnes {
 
         lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList(personne -> new Observable[] {personne.ageProperty()}));
         ageMoyen = new SimpleIntegerProperty();
-        nbParisiens = new SimpleIntegerProperty();
+
+
 
         calculAgeMoyen = new IntegerBinding() {
             // constructeur de la classe interne anonyme
@@ -42,6 +43,10 @@ public class MainPersonnes {
                 return total / lesPersonnes.size();
             }
         };
+
+        lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList(personne -> new Observable[] {personne.villeDeNaissanceProperty()}));
+
+        nbParisiens = new SimpleIntegerProperty();
             calculnbParisiens = new IntegerBinding() {
                 // constructeur de la classe interne anonyme
                 {
