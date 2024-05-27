@@ -13,7 +13,9 @@ public class LoginControl extends GridPane {
     private PasswordField pwd;
 
     private void createBindings() {
-        // MÉTHODE À COMPLÉTER
+
+
+
     }
 
     @FXML

@@ -61,7 +61,6 @@ public class MainPersonnes {
                         if(Objects.equals(pr.getVilleDeNaissance(), "Paris")){
                             total += 1;
                         }
-                        System.out.println(total);
                     }
 
                     return total;
